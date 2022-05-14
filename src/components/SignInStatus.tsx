@@ -27,7 +27,7 @@ export const SignInStatus = () => {
               signIn()
             }}
           >
-            Sign in with Twitter (Read only)
+            Sign in with Hatena Bookmark (Read only)
           </button>
         </>
       )}

@@ -1,5 +1,4 @@
 import NextAuth from 'next-auth'
-import TwitterProvider from 'next-auth/providers/twitter'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 
@@ -8,10 +7,28 @@ const prisma = new PrismaClient()
 export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
+  debug: true,
   providers: [
-    TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET,
-    }),
+    {
+      id: 'hatena',
+      name: 'Hatena Bookmark',
+      type: 'oauth',
+      version: '1.0',
+      clientId: process.env.HATENA_KEY,
+      clientSecret: process.env.HATENA_SECRET,
+      authorization:
+        'https://www.hatena.ne.jp/oauth/authorize?scope=read_public',
+      accessTokenUrl: 'https://www.hatena.com/oauth/token?scope=read_public',
+      requestTokenUrl:
+        'https://www.hatena.com/oauth/initiate?scope=read_public',
+      profileUrl: 'http://n.hatena.com/applications/my.json',
+      profile(profile) {
+        return {
+          id: profile.url_name,
+          name: profile.display_name,
+          image: profile.profile_image_url,
+        }
+      },
+    },
   ],
 })
