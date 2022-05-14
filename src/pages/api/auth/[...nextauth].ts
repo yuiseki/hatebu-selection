@@ -18,9 +18,8 @@ export default NextAuth({
       clientSecret: process.env.HATENA_SECRET,
       authorization:
         'https://www.hatena.ne.jp/oauth/authorize?scope=read_public',
-      accessTokenUrl: 'https://www.hatena.com/oauth/token?scope=read_public',
-      requestTokenUrl:
-        'https://www.hatena.com/oauth/initiate?scope=read_public',
+      requestTokenUrl: 'https://www.hatena.com/oauth/initiate',
+      accessTokenUrl: 'http:///www.hatena.com/oauth/token',
       profileUrl: 'http://n.hatena.com/applications/my.json',
       profile(profile) {
         return {
